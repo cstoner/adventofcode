@@ -51,29 +51,53 @@ func parse_direction(dir string) (string, int) {
 	return turn_dir, turn_steps
 }
 
+/* Takes the current (x,y) position, the direction to go, and the number of steps
+ * Returns the new (x,y) position. As well as strings representing every step taken
+ */
+func do_steps(curr_x int, curr_y int, dir int, steps int) (int, int, []string) {
+	ret_steps := make([]string, steps)
+
+	for i := 0; i < steps; i++ {
+		switch dir {
+		case UP:
+			curr_x += 1
+		case DOWN:
+			curr_x -= 1
+		case RIGHT:
+			curr_y += 1
+		case LEFT:
+			curr_y -= 1
+		}
+		ret_steps[i] = fmt.Sprintf("%d,%d", curr_x, curr_y)
+	}
+
+	return curr_x, curr_y, ret_steps
+}
+
 func main() {
 	var input_file string = "day1.data"
 	data := read_data(input_file)
 
 	curr_dir := UP
 	curr_x, curr_y := 0, 0
+	all_steps := make(map[string]int)
+
+	var step_list []string
 
 	for _, element := range data {
 		turn_dir, turn_steps := parse_direction(element)
 		curr_dir = apply_turn(curr_dir, turn_dir)
 
-		switch curr_dir {
-		case UP:
-			curr_x += turn_steps
-		case DOWN:
-			curr_x -= turn_steps
-		case RIGHT:
-			curr_y += turn_steps
-		case LEFT:
-			curr_y -= turn_steps
+		curr_x, curr_y, step_list = do_steps(curr_x, curr_y, curr_dir, turn_steps)
+		/* This section can be commented out to get the answer to part 1 */
+		for i := 0; i < len(step_list); i++ {
+			if _, found := all_steps[step_list[i]]; found {
+				fmt.Printf("Crossed a previous path at (%s)\n", step_list[i])
+				return
+			} else {
+				all_steps[step_list[i]] = 1
+			}
 		}
-
-		fmt.Printf("Heading '%d' and taking '%d' steps\n", curr_dir, turn_steps)
-		fmt.Printf("current position (%d, %d)\n", curr_x, curr_y)
 	}
+	fmt.Printf("current position (%d, %d)\n", curr_x, curr_y)
 }
