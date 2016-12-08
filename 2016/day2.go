@@ -24,7 +24,6 @@ func showUsage() {
 func main() {
 	data := load_data("day2.data")
 
-
 	// Start in the middle
 	keypad1 := [][]string{
 		{"0", "0", "0", "0", "0"},
@@ -44,19 +43,19 @@ func main() {
 
 	var keypad [][]string
 	var curr_x, curr_y int
-	if (len(os.Args) != 2) {
+	if len(os.Args) != 2 {
 		showUsage()
-	} else if (strings.Compare(os.Args[1], "1") == 0) {
+	} else if strings.Compare(os.Args[1], "1") == 0 {
 		keypad = keypad1
-		curr_x, curr_y = 2,2
-	} else if (strings.Compare(os.Args[1], "2") == 0) {
+		curr_x, curr_y = 2, 2
+	} else if strings.Compare(os.Args[1], "2") == 0 {
 		keypad = keypad2
-		curr_x, curr_y = 1,3
+		curr_x, curr_y = 1, 3
 	} else {
 		showUsage()
 	}
 	//curr_x, curr_y := len(keypad)/2, len(keypad)/2
-	
+
 	fmt.Printf("Starting at (%d,%d)\n", curr_x, curr_y)
 	for i := 0; i < len(data); i++ {
 		//fmt.Printf("(%d,%d): %s\n", curr_x, curr_y, keypad[curr_y][curr_x])

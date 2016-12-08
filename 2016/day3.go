@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
-	"os"
 )
 
 func canMakeTriangle(lst []int) bool {
@@ -32,7 +32,7 @@ func readData(filename string) ([][]int, error) {
 	int_lists := make([][]int, input_count)
 
 	for i := 0; i < len(input_lines); i++ {
-		nums := strings.Fields(input_lines[i])	
+		nums := strings.Fields(input_lines[i])
 		if len(nums) == 0 {
 			input_count -= 1
 			continue
@@ -58,15 +58,15 @@ func main() {
 	}
 	acc := 0
 
-	if (len(os.Args) != 2) {
+	if len(os.Args) != 2 {
 		showUsage()
-	} else if (strings.Compare(os.Args[1], "1") == 0) {
+	} else if strings.Compare(os.Args[1], "1") == 0 {
 		for i := 0; i < len(data); i++ {
 			if canMakeTriangle(data[i]) {
 				acc += 1
 			}
 		}
-	} else if (strings.Compare(os.Args[1], "2") == 0) {
+	} else if strings.Compare(os.Args[1], "2") == 0 {
 		tmp := make([]int, 3)
 		// Process groups of 3
 		for i := 0; i < len(data); i += 3 {
